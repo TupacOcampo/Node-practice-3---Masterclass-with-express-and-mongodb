@@ -1,0 +1,22 @@
+{
+  "name": "node-practice-3---masterclass-with-express-and-mongodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "colors": "^1.4.0",
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.4.1",
+    "slugify": "^1.6.6"
+  }
+}
