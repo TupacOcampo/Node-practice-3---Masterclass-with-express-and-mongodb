@@ -13,6 +13,7 @@ connect();
 app.use(express.json());
 app.use(requestLogger);
 app.use("/api/v1/bootcamps", require("./routes/bootcampRoutes"));
+app.use("/api/v1/courses", require("./routes/courseRoutes"));
 app.use(errorHandler);
 
 const server = app.listen(PORT, (req, res) => {
