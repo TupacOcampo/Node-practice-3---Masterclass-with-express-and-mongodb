@@ -38,5 +38,20 @@ const courseSchema = new mongoose.Schema({
     }
 });
 
+//Statis method to get average of course tuitions
+courseSchema.statics.getAverageCost = async function(){
+    
+}
+
+// call get average cost after save
+courseSchema.pre('save', function(){
+
+});
+
+// call get average cost after save
+courseSchema.pre('deleteOne', function(){
+
+});
+
 
 module.exports = mongoose.model('Course', courseSchema);
