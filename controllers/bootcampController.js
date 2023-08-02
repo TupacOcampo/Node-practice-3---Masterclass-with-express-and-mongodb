@@ -25,7 +25,7 @@ const getAllBootcamps = asyncHandler (async (req, res, next) =>{
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
     //Finding resource
-    query = Bootcamp.find(JSON.parse(queryStr));
+    query = Bootcamp.find(JSON.parse(queryStr)).populate('courses');
 
     //Select fields 
     if (req.query.select){
@@ -70,7 +70,7 @@ const getAllBootcamps = asyncHandler (async (req, res, next) =>{
     //Executing query
     const bootcamps = await query
 
-    res.status(200).json({success:true, count: bootcamps.length, pagination, data:bootcamps});
+    res.status(200).json({success:true, count: bootcamps.length, pagination, bootcamps:bootcamps});
 });
 
 //@Desc      Get bootcamp
@@ -107,10 +107,11 @@ const updateBootcampById =asyncHandler (async (req, res, next) => {
 //@Route     DELETE /api/v1/bootcamps/:id
 //@Access    Private
 const deleteBootcampById = asyncHandler (async (req, res, next) => {
-    const deletedBootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
+    const deletedBootcamp = await Bootcamp.findById(req.params.id);
     if (!deletedBootcamp){
         return next(new ErrorResponse(`Bootcamp not fount with id of ${req.params.id}`, 404));
     }
+    deletedBootcamp.deleteOne();
     res.status(200).json({success:true, data: deletedBootcamp})    
 });
 
