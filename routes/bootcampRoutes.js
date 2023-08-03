@@ -7,6 +7,9 @@ const { getAllBootcamps,
         updateBootcampById, 
         deleteBootcampById } = require("../controllers/bootcampController");
 
+const Bootcamp = require('../models/bootcampModel');
+const advancedResoults = require("../middleware/advancedResoults");
+
 const courseRouter = require('./courseRoutes');
 
 //reRoute into other resource routers
@@ -14,7 +17,7 @@ const courseRouter = require('./courseRoutes');
 bootcampRouter.use('/:bootcampId/courses', courseRouter);
 
 bootcampRouter.route("/")
-    .get(getAllBootcamps)
+    .get(advancedResoults(Bootcamp, 'courses'), getAllBootcamps)
     .post(createNewBootcamp)
 
 bootcampRouter.route("/:id")
