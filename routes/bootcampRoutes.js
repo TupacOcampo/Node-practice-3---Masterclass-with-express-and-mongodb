@@ -19,7 +19,11 @@ bootcampRouter.use('/:bootcampId/courses', courseRouter);
 
 bootcampRouter.route("/")
     .get(advancedResoults(Bootcamp, 'courses'), getAllBootcamps)
+<<<<<<< HEAD
     .post(protect, grantAccessToSpecificRole("publisher", "admin"), createNewBootcamp)
+=======
+    .post(createNewBootcamp)
+>>>>>>> ac33b9d3ed2173d3d3901755e906dcb15b3dbd3c
 
 bootcampRouter.route("/:id")
     .get(getBootcampById)
