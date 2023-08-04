@@ -9,11 +9,7 @@ const advancedResults = require('../middleware/advancedResoults');
 
 coursesRouter.route('/')
     .get(advancedResults(Course, 'bootcamp'), getAllCourses)
-<<<<<<< HEAD
     .post(protect, addCourse);
-=======
-    .post(addCourse);
->>>>>>> ac33b9d3ed2173d3d3901755e906dcb15b3dbd3c
 
 coursesRouter.route('/:id')
     .get(getCourseById)
