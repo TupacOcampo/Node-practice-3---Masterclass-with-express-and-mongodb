@@ -1,6 +1,7 @@
 const Bootcamp = require("../models/bootcampModel");
 const ErrorResponse = require("../utils/errorResponse");
-const asyncHandler = require("../middleware/async")
+const asyncHandler = require("../middleware/async");
+const { BSONError } = require("bson");
 
 //@Desc      Get all bootcamps
 //@Route     GET /api/v1/bootcamps
@@ -24,6 +25,13 @@ const getBootcampById = asyncHandler (async (req, res, next) => {
 //@Route     POST /api/v1/bootcamps/
 //@Access    Private
 const createNewBootcamp = asyncHandler (async (req, res, next) => {
+    //Add user to request.body
+    req.body.user = req.user.id;
+    //Check for published bootcamps
+    const publishedBootcamps = await Bootcamp.findOne({user:req.body.id});
+    if (publishedBootcamps && req.user.role !== 'admin'){
+        return next(new ErrorResponse(`User with id ${req.user.id} has already published a bootamp`, 400));
+    }
     const createdBootcamp = await Bootcamp.create(req.body);
     res.status(201).json({success:true, msg:createdBootcamp});
 })

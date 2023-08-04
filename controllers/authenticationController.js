@@ -80,5 +80,26 @@ const getLoggedUser = asyncHandler (async (req, res, next) => {
     })
 });
 
+//@Desc      Forgot password
+//@Route     Get /api/v1/auth/forgotPassword
+//@Access    Public
+const forgotPassword = asyncHandler (async (req, res, next) => {
+    const currentUser = await User.findOne({email: req.body.email});
 
-module.exports = { registerUser, loginUser, getLoggedUser }
+    if (!currentUser){
+        next(new ErrorResponse("This email does not exist!", 404));
+    }
+
+    //Get Reset token
+    const resetToken = currentUser.getResetToken()
+    
+    await currentUser.save();
+
+    res.status(200).json({
+        success:true,
+        user:currentUser
+    })
+});
+
+
+module.exports = { registerUser, loginUser, getLoggedUser, forgotPassword }
