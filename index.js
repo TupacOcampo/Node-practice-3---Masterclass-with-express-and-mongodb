@@ -1,9 +1,12 @@
 const express = require("express")
+const colors = require("colors");
+const cookieParser = require("cookie-parser");
 const dotEnv = require("dotenv").config();
+
 const requestLogger = require("./middleware/loggerMiddleware");
 const connect = require("./config/dbConnection");
 const errorHandler = require("./middleware/errorHandler");
-const colors = require("colors");
+
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -11,9 +14,11 @@ const app = express();
 connect();
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(requestLogger);
 app.use("/api/v1/bootcamps", require("./routes/bootcampRoutes"));
 app.use("/api/v1/courses", require("./routes/courseRoutes"));
+app.use("/api/v1/authentication", require("./routes/authenticationRoute"));
 app.use(errorHandler);
 
 const server = app.listen(PORT, (req, res) => {
